@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import androidx.core.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
+import android.os.Handler
+import android.os.Looper
 import android.widget.PopupMenu
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -27,6 +29,8 @@ class HomeFragment : Fragment() {
     private var currentCategory: String? = null
     private var currentSort: String = "rating_desc"
     private var currentQuery: String = ""
+    private val searchHandler = Handler(Looper.getMainLooper())
+    private var searchRunnable: Runnable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,8 +98,13 @@ class HomeFragment : Fragment() {
 
     private fun setupSearch() {
         binding.searchEditText.addTextChangedListener { text ->
+            searchRunnable?.let { searchHandler.removeCallbacks(it) }
             currentQuery = text?.toString() ?: ""
-            loadData()
+            if (currentQuery.isNotBlank()) {
+                adapter.showSkeleton(2)
+            }
+            searchRunnable = Runnable { loadData() }
+            searchHandler.postDelayed(searchRunnable!!, 2000L)
         }
     }
 
@@ -107,14 +116,13 @@ class HomeFragment : Fragment() {
                 menu.add(0, 2, 2, "Nama A-Z")
                 menu.add(0, 3, 3, "Nama Z-A")
                 setOnMenuItemClickListener { item ->
-                    val (sortBy, _) = when (item.itemId) {
-                        0 -> "rating_desc" to "Rating ▾"
-                        1 -> "rating_asc" to "Rating ▴"
-                        2 -> "name_asc" to "Nama A-Z"
-                        3 -> "name_desc" to "Nama Z-A"
-                        else -> "rating_desc" to "Rating ▾"
+                    currentSort = when (item.itemId) {
+                        0 -> "rating_desc"
+                        1 -> "rating_asc"
+                        2 -> "name_asc"
+                        3 -> "name_desc"
+                        else -> "rating_desc"
                     }
-                    currentSort = sortBy
                     loadData()
                     true
                 }
@@ -132,6 +140,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        searchRunnable?.let { searchHandler.removeCallbacks(it) }
         _binding = null
     }
 }

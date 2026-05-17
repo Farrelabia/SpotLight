@@ -1,6 +1,7 @@
 package com.example.spotlight
 
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.spotlight.databinding.ActivityMainBinding
@@ -25,6 +26,23 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
+        supportActionBar?.setLogo(R.drawable.ic_spotlight_logo)
+
+        binding.toolbar.post {
+            for (i in 0 until binding.toolbar.childCount) {
+                val child = binding.toolbar.getChildAt(i)
+                if (child is ImageView) {
+                    val sizePx = (36 * resources.displayMetrics.density).toInt()
+                    child.layoutParams = child.layoutParams.apply {
+                        width = sizePx
+                        height = sizePx
+                    }
+                    child.scaleType = ImageView.ScaleType.FIT_CENTER
+                    child.requestLayout()
+                    break
+                }
+            }
+        }
 
         binding.bottomNav.setupWithNavController(navController)
     }
