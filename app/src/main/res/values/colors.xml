@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary: warm violet, not cold indigo -->
+    <color name="purple_200">#FFB39DDB</color>
+    <color name="purple_500">#FF7E57C2</color>
+    <color name="purple_700">#FF5E35B1</color>
+
+    <!-- Accent -->
+    <color name="primary_light">#FFB39DDB</color>
+
+    <!-- Surfaces: tinted toward purple, not pure white -->
+    <color name="surface">#FFF7F5FA</color>
+    <color name="white">#FFFDFCFF</color>
+    <color name="black">#FF1E1B2E</color>
+
+    <!-- Text: purple-tinted neutrals -->
+    <color name="text_primary">#FF1E1B2E</color>
+    <color name="text_secondary">#FF6E6A7C</color>
+    <color name="text_hint">#FF9E99AD</color>
+
+    <!-- UI elements -->
+    <color name="divider">#FFE8E5EE</color>
+    <color name="error_red">#FFD32F2F</color>
+
+    <!-- Splash gradient -->
+    <color name="splash_dark">#FF311B92</color>
+    <color name="splash_light">#FF7E57C2</color>
+
+    <!-- Kept for Compose template compatibility -->
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+</resources>
