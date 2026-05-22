@@ -79,31 +79,15 @@
             android:layout_marginTop="@dimen/padding_medium"
             android:text="Buka di Google Maps" />
 
-        <LinearLayout
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFavorite"
+            style="@style/Widget.Material3.Button.TonalButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFavorite"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="@dimen/padding_small"
-                android:text="Tambah Favorit" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnDelete"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Hapus"
-                android:textColor="@color/error_red"
-                app:strokeColor="@color/error_red" />
-
-        </LinearLayout>
+            android:layout_marginTop="12dp"
+            app:icon="@drawable/ic_favorite_border"
+            app:iconGravity="textStart"
+            android:text="Tambah Favorit" />
 
     </LinearLayout>
 

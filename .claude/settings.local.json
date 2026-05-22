@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(python -c ' *)",
-      "Bash(python3 -c ' *)"
+      "Bash(python3 -c ' *)",
+      "Bash(bash *)",
+      "Bash(pip list *)",
+      "Bash(python3 *)",
+      "Bash(git add *)",
+      "Bash(./gradlew assembleDebug)",
+      "Bash(./gradlew clean *)"
     ]
   }
 }

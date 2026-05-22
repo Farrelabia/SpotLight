@@ -2,7 +2,6 @@ package com.example.spotlight
 
 import android.os.Bundle
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.spotlight.databinding.ActivityMainBinding
 import androidx.navigation.NavController
@@ -45,6 +44,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.bottomNav.setupWithNavController(navController)
+
+        val sharedPreferences = getSharedPreferences("spotlight_prefs", MODE_PRIVATE)
+        val isDarkMode = sharedPreferences.getBoolean("dark_mode", false)
+        val mode = if (isDarkMode)
+            androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+        else
+            androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+        androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(mode)
     }
 
     override fun onCreateOptionsMenu(menu: android.view.Menu): Boolean {
@@ -55,10 +62,35 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
-                Toast.makeText(this, "Settings coming soon", Toast.LENGTH_SHORT).show()
+                showDarkModeDialog()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showDarkModeDialog() {
+        val sharedPreferences = getSharedPreferences("spotlight_prefs", MODE_PRIVATE)
+        val isDarkMode = sharedPreferences.getBoolean("dark_mode", false)
+
+        val switch = com.google.android.material.materialswitch.MaterialSwitch(this).apply {
+            isChecked = isDarkMode
+            text = "Dark Mode"
+            setPadding(48, 24, 48, 24)
+        }
+
+        com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+            .setTitle("Pengaturan")
+            .setView(switch)
+            .setPositiveButton("Tutup") { dialog, _ ->
+                sharedPreferences.edit().putBoolean("dark_mode", switch.isChecked).apply()
+                val mode = if (switch.isChecked)
+                    androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+                else
+                    androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+                androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(mode)
+                dialog.dismiss()
+            }
+            .show()
     }
 }

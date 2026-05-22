@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.spotlight.databinding.ItemPlaceBinding
 import com.example.spotlight.databinding.ItemPlaceSkeletonBinding
 import com.example.spotlight.model.Place
+import com.example.spotlight.utils.FavoriteManager
 
 
 class PlaceAdapter(
@@ -31,6 +32,9 @@ class PlaceAdapter(
             binding.tvLocation.text = location
             binding.tvRating.text = "⭐ $rating"
             binding.imgPlace.setImageResource(imageRes)
+
+            val isFav = FavoriteManager.isFavorite(binding.root.context, place.name)
+            binding.imgFavorite.visibility = if (isFav) android.view.View.VISIBLE else android.view.View.GONE
 
             binding.root.setOnClickListener {
                 onItemClick(place)
@@ -80,4 +84,6 @@ class PlaceAdapter(
         places = newPlaces
         notifyDataSetChanged()
     }
+
+    fun currentList(): List<Place> = places
 }

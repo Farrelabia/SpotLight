@@ -8,11 +8,14 @@ import android.content.Intent
 import android.net.Uri
 import com.example.spotlight.databinding.BottomSheetPlaceDetailBinding
 import com.example.spotlight.model.Place
+import com.example.spotlight.utils.FavoriteManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
 class PlaceDetailBottomSheet : BottomSheetDialogFragment() {
+
+    var onFavoriteChanged: (() -> Unit)? = null
 
     private var _binding: BottomSheetPlaceDetailBinding? = null
     private val binding get() = _binding!!
@@ -43,17 +46,25 @@ class PlaceDetailBottomSheet : BottomSheetDialogFragment() {
         }
 
         binding.btnFavorite.setOnClickListener {
-            Snackbar.make(view, "Ditambahkan ke favorit", Snackbar.LENGTH_SHORT).show()
-        }
+            val isFav = FavoriteManager.isFavorite(requireContext(), place.name)
+            val title = if (isFav) "Hapus Favorit" else "Tambah Favorit"
+            val message = if (isFav) "Hapus tempat ini dari daftar favorit?" else "Tambahkan tempat ini ke daftar favorit?"
+            val snackMsg = if (isFav) "Dihapus dari favorit" else "Ditambahkan ke favorit"
 
-        binding.btnDelete.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Konfirmasi")
-                .setMessage("Yakin mau hapus tempat ini?")
+                .setTitle(title)
+                .setMessage(message)
                 .setPositiveButton("Ya") { dialog, _ ->
-                    dismiss()
+                    if (isFav) {
+                        FavoriteManager.removeFavorite(requireContext(), place.name)
+                    } else {
+                        FavoriteManager.addFavorite(requireContext(), place.name)
+                    }
+                    Snackbar.make(view, snackMsg, Snackbar.LENGTH_SHORT).show()
+                    onFavoriteChanged?.invoke()
+                    dialog.dismiss()
                 }
-                .setNegativeButton("Tidak") { dialog, _ ->
+                .setNegativeButton("Batal") { dialog, _ ->
                     dialog.dismiss()
                 }
                 .show()

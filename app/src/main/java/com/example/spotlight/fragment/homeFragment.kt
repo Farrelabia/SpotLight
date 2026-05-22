@@ -89,8 +89,11 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView() {
         adapter = PlaceAdapter(emptyList()) { place ->
-            PlaceDetailBottomSheet.newInstance(place)
-                .show(childFragmentManager, "place_detail")
+            val bottomSheet = PlaceDetailBottomSheet.newInstance(place)
+            bottomSheet.onFavoriteChanged = {
+                adapter.updateData(adapter.currentList())
+            }
+            bottomSheet.show(childFragmentManager, "place_detail")
         }
         binding.rvPlaces.layoutManager = LinearLayoutManager(requireContext())
         binding.rvPlaces.adapter = adapter

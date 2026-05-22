@@ -20,7 +20,7 @@
         android:text="SpotLight"
         android:textSize="36sp"
         android:textStyle="bold"
-        android:textColor="@color/white"
+        android:textColor="#FFFFFFFF"
         android:letterSpacing="0.02" />
 
     <TextView

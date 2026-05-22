@@ -1,0 +1,32 @@
+<h2>2 Pendekatan Implementasi</h2>
+<p class="subtitle">Pilih mana yang lebih cocok buat Final Project lu</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Minimalis (Recommended)</h3>
+      <p><strong>Settings:</strong> Dark Mode toggle di overflow menu → buka dialog/bottom sheet kecil, toggle pake SwitchMaterial, simpen ke SharedPreferences.</p>
+      <p><strong>Favorite:</strong> Tombol jadi icon doang (love icon), toggle filled/unfilled. State gak disimpan — reset pas app restart. Snackbar "Ditambahkan ke favorit" / "Dihapus dari favorit".</p>
+      <p><strong>Delete:</strong> Tombol dihapus dari layout.</p>
+      <div class="pros-cons" style="margin-top: 12px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Gampang implementasi</li><li>Gak perlu Room DB</li><li>Cukup buat nilai</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Favorite gak persist</li><li>Dark mode mungkin basic</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Lebih Lengkap</h3>
+      <p><strong>Settings:</strong> Dark Mode toggle → SettingsActivity/Fragment baru pake PreferenceFragmentCompat. Lebih "proper" Android pattern.</p>
+      <p><strong>Favorite:</strong> Icon love toggle + state disimpan di SharedPreferences (Set<String>). Tetap ada walau app di-restart.</p>
+      <p><strong>Delete:</strong> Tombol dihapus dari layout.</p>
+      <div class="pros-cons" style="margin-top: 12px;">
+        <div class="pros"><h4>Pros</h4><ul><li>Favorite persist</li><li>Settings proper (PreferenceScreen)</li><li>Lebih impressive</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Lebih kerja</li><li>PreferenceFragment setup extra</li><li>Favorite state perlu di-pass antar fragment</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>
