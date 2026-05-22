@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.spotlight.adapter.AboutPagerAdapter
 import com.example.spotlight.databinding.FragmentAboutBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 class AboutFragment : Fragment() {
 
@@ -19,6 +21,21 @@ class AboutFragment : Fragment() {
     ): View {
         _binding = FragmentAboutBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val pagerAdapter = AboutPagerAdapter(requireActivity())
+        binding.viewPager.adapter = pagerAdapter
+
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = when (position) {
+                0 -> "Tentang App"
+                1 -> "Profil Developer"
+                else -> null
+            }
+        }.attach()
     }
 
     override fun onDestroyView() {
